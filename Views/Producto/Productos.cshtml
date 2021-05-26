@@ -1,0 +1,50 @@
+@model List<Producto>
+
+<h1>Productos Buscados</h1> 
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Nombre del Producto</th>
+            <th>Foto</th>
+            <th>Descripcion del Producto</th>
+            <th>Precio</th>
+            <th>Celular</th>
+            <th>Lugar de Compra</th>
+            <th>Nombre del Comprador</th>
+            <th>Categoria</th>
+            <th>Operaciones</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.id</td>
+            <td>@item.NombreProducto</td>
+            <th><img src="@item.Foto" height="200" width="200" alt=""></th>
+            <td>@item.Descripcion</td>
+            <td>S/. @item.Precio</td>
+            <td>@item.Celular</td>
+            <td>@item.LugarCompra</td>
+            <td>@item.NombreComprador</td>
+            <td>@item.categoria.NombreCategoria</td>
+            
+            <td class="d-inline-block">
+                <a href="/Producto/EditarProducto/@item.id" class="btn btn-secondary">Editar</a>
+
+                <form asp-action="BorrarProducto" method="post" class="d-inline-block">
+                    <input type="hidden" name="id" value="@item.id" />
+                    <button class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar el producto?')">Borrar</button>
+                </form>
+            </td>
+        </tr>
+    }
+    @if (Model.Count == 0){
+        <tr>
+            <td colspan="10" class="text-center">No se econtraron Productos</td>
+        </tr>
+    }
+</table>
+
+<a asp-action="NuevoProducto" class="btn btn-primary">Buscar Producto</a>
