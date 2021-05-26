@@ -1,0 +1,44 @@
+@model List<Categoria>
+
+<h1>Lista de Categorias</h1> 
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Productos</th>
+            <th>Operaciones</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.id</td>
+            <td>@item.NombreCategoria</td>
+            <td>
+                @foreach (var producto in item.Producto)
+                {
+                    <ol>
+                        <span>@producto.NombreProducto  </span>
+                    </ol>
+                }     
+            </td>
+            <td>
+                <a href="/Categoria/EditarCategoria/@item.id" class="btn btn-secondary">Editar</a>
+
+                <form asp-action="BorrarCategoria" method="post" class="d-inline-block">
+                    <input type="hidden" name="id" value="@item.id" />
+                    <button class="btn btn-danger">Borrar</button>
+                </form>
+            </td>
+        </tr>
+    }
+    @if (Model.Count == 0){
+        <tr>
+            <td colspan="4" class="text-center">No se econtraron Categorias</td>
+        </tr>
+    }
+</table>
+
+<a asp-action="NuevaCategoria" class="btn btn-primary">Añadir Categoria</a>
